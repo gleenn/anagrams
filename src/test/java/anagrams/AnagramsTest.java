@@ -1,5 +1,6 @@
 package anagrams;
 
+import org.junit.Ignore;
 import org.junit.Test;
 
 import java.util.HashSet;
@@ -38,7 +39,7 @@ public class AnagramsTest {
                 new HashSet<>(asList("foo", "ofo", "oof")))));
     }
 
-    @Test
+    @Test @Ignore
     public void forReals() {
         Anagrams.main(new String[] {"/usr/share/dict/words"});
     }
