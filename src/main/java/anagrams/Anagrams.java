@@ -1,7 +1,9 @@
 package anagrams;
 
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.LinkedList;
+import java.util.Map;
 import java.util.Set;
 
 import static java.util.Arrays.asList;
@@ -44,12 +46,26 @@ public class Anagrams {
     }
 
     public Set<String> get(final String word) {
-
         return get(root, wordToList(word));
     }
 
     Set<String> get(final Node current, final LinkedList<String> letters) {
         if(letters.size() == 1) return current.words;
         return get(current.children.get(letters.removeFirst()), letters);
+    }
+
+    public Set<Set<String>> getAll() {
+        Set<Set<String>> result = new HashSet<>();
+        getAll(root, result);
+        return result;
+    }
+
+    public void getAll(Node node, Set<Set<String>> result) {
+        for(Map.Entry<String, Node> child : node.children.entrySet()) {
+            Node childNode = child.getValue();
+            if(childNode.words.size() > 0)
+                result.add(childNode.words);
+            getAll(childNode, result);
+        }
     }
 }

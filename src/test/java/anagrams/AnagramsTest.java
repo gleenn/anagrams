@@ -27,5 +27,10 @@ public class AnagramsTest {
         assertThat(anagrams.get("oo")).isEqualTo(new HashSet<>(asList("oo")));
         assertThat(anagrams.get("foo")).isEqualTo(new HashSet<>(asList("foo", "ofo", "oof")));
         assertThat(anagrams.get("aabb")).isEqualTo(new HashSet<>(asList("abab", "baba")));
+
+        assertThat(anagrams.getAll()).isEqualTo(new HashSet<>(asList(
+                new HashSet<>(asList("oo")),
+                new HashSet<>(asList("abab", "baba")),
+                new HashSet<>(asList("foo", "ofo", "oof")))));
     }
 }
