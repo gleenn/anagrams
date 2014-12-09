@@ -15,22 +15,31 @@ public class AnagramsTest {
     @Test
     public void add() {
         anagrams = new Anagrams();
+        anagrams.add("a");
+        anagrams.add("s");
         anagrams.add("foo");
         anagrams.add("ofo");
         anagrams.add("oof");
-        anagrams.add("oo");
-        anagrams.add("oo");
-        anagrams.add("oo");
+        anagrams.add("of");
+        anagrams.add("of");
+        anagrams.add("of");
         anagrams.add("abab");
         anagrams.add("baba");
 
-        assertThat(anagrams.get("oo")).isEqualTo(new HashSet<>(asList("oo")));
+        assertThat(anagrams.get("a")).isEqualTo(new HashSet<>(asList("a")));
+        assertThat(anagrams.get("s")).isEqualTo(new HashSet<>(asList("s")));
+        assertThat(anagrams.get("of")).isEqualTo(new HashSet<>(asList("of")));
+        assertThat(anagrams.get("fo")).isEqualTo(new HashSet<>(asList("of")));
         assertThat(anagrams.get("foo")).isEqualTo(new HashSet<>(asList("foo", "ofo", "oof")));
         assertThat(anagrams.get("aabb")).isEqualTo(new HashSet<>(asList("abab", "baba")));
 
         assertThat(anagrams.getAll()).isEqualTo(new HashSet<>(asList(
-                new HashSet<>(asList("oo")),
                 new HashSet<>(asList("abab", "baba")),
                 new HashSet<>(asList("foo", "ofo", "oof")))));
+    }
+
+    @Test
+    public void forReals() {
+        Anagrams.main(new String[] {"/usr/share/dict/words"});
     }
 }

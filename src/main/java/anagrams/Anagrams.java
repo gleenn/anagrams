@@ -5,6 +5,7 @@ import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.Map;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import static java.util.Arrays.asList;
 import static utils.FileUtils.readLines;
@@ -13,15 +14,13 @@ public class Anagrams {
     private Node root;
 
     public static void main(final String[] args) {
-        readLines(args[0], System.out::println);
+        Anagrams anagrams = new Anagrams();
+        readLines(args[0], anagrams::add);
+        anagrams.getAll().stream().collect(Collectors.toSet()).forEach(System.out::println);
     }
 
     public Anagrams() {
         this.root = new Node();
-    }
-
-    public void add(final String word) {
-        add(root, wordToList(word), word);
     }
 
     private LinkedList<String> wordToList(String word) {
@@ -30,18 +29,26 @@ public class Anagrams {
         return new LinkedList<>(asList(chars));
     }
 
+    public void add(final String word) {
+        add(root, wordToList(word), word);
+    }
+
     void add(final Node current, final LinkedList<String> letters, final String word) {
         if(letters.size() == 0) return;
-        if(letters.size() == 1) {
-            current.words.add(word);
-            return;
-        }
         String character = letters.removeFirst();
+
         Node next = current.children.get(character);
         if(next == null) {
             next = new Node();
             current.children.put(character, next);
         }
+
+        if(letters.size() == 0) {
+            next.words.add(word);
+        }
+
+        current.children.put(character, next);
+
         add(next, letters, word);
     }
 
@@ -50,7 +57,7 @@ public class Anagrams {
     }
 
     Set<String> get(final Node current, final LinkedList<String> letters) {
-        if(letters.size() == 1) return current.words;
+        if(letters.size() == 0) return current.words;
         return get(current.children.get(letters.removeFirst()), letters);
     }
 
@@ -63,7 +70,7 @@ public class Anagrams {
     public void getAll(Node node, Set<Set<String>> result) {
         for(Map.Entry<String, Node> child : node.children.entrySet()) {
             Node childNode = child.getValue();
-            if(childNode.words.size() > 0)
+            if(childNode.words.size() > 1)
                 result.add(childNode.words);
             getAll(childNode, result);
         }
