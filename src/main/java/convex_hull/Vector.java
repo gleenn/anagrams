@@ -12,11 +12,11 @@ public class Vector {
         this.dest = dest;
     }
 
-    public static int height(Vector v) {
+    public static int deltaY(Vector v) {
         return v.dest.y - v.orig.y;
     }
 
-    public static int width(Vector v) {
+    public static int deltaX(Vector v) {
         return v.dest.x - v.orig.x;
     }
 
@@ -25,14 +25,23 @@ public class Vector {
     }
 
     public static int dot(Vector a, Vector b) {
-        return width(a) * width(b) + height(a) * height(b);
+        return deltaX(a) * deltaX(b) + deltaY(a) * deltaY(b);
     }
 
     public static double magnitude(Vector v) {
-        return sqrt(height(v) * height(v) + width(v) * width(v));
+        return sqrt(deltaY(v) * deltaY(v) + deltaX(v) * deltaX(v));
     }
 
     public static double angle(Vector a, Vector b) {
         return acos(dot(a, b) / (magnitude(a) * magnitude(b)));
+    }
+
+    public static boolean isRightOf(Point p, Vector v) {
+        return slope(v) * p.x < p.y;
+    }
+
+    public static double slope(Vector v) {
+        int dx = deltaX(v);
+        return dx == 0 ? Double.MAX_VALUE : ((double)deltaY(v)) / dx;
     }
 }

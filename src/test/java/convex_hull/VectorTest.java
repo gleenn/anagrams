@@ -11,51 +11,68 @@ import static org.fest.assertions.Delta.delta;
 
 public class VectorTest {
 
-    private Point a;
-    private Point b;
-    private Point p;
-    private Vector vA;
-    private Vector vB;
-    private Vector vZ;
+    private Point up;
+    private Point right;
+    private Point origin;
+    private Point upRight;
+    private Vector vUp;
+    private Vector vRight;
+    private Vector vOrigin;
+    private Vector vUpRight;
 
     @Before
     public void setUp() throws Exception {
-        a = point(0, 1);
-        b = point(1, 0);
-        p = point(0, 0);
-        vA = vector(p, a);
-        vB = vector(p, b);
-        vZ = vector(p, p);
+        up = point(1, 0);
+        right = point(0, 1);
+        origin = point(0, 0);
+        upRight = point(1, 1);
+        vUp = vector(origin, up);
+        vRight = vector(origin, right);
+        vOrigin = vector(origin, origin);
+        vUpRight = vector(origin, upRight);
     }
 
     @Test
-    public void height_works() {
-        assertThat(height(vA)).isEqualTo(1);
-        assertThat(height(vB)).isEqualTo(0);
-        assertThat(height(vZ)).isEqualTo(0);
+    public void deltaY_works() {
+        assertThat(deltaY(vUp)).isEqualTo(1);
+        assertThat(deltaY(vRight)).isEqualTo(0);
+        assertThat(deltaY(vOrigin)).isEqualTo(0);
     }
 
     @Test
-    public void width_works() {
-        assertThat(width(vA)).isEqualTo(0);
-        assertThat(width(vB)).isEqualTo(1);
-        assertThat(width(vZ)).isEqualTo(0);
+    public void deltaX_works() {
+        assertThat(deltaX(vUp)).isEqualTo(0);
+        assertThat(deltaX(vRight)).isEqualTo(1);
+        assertThat(deltaX(vOrigin)).isEqualTo(0);
     }
 
     @Test
     public void dot_works() {
-        assertThat(dot(vA, vB)).isEqualTo(0);
+        assertThat(dot(vUp, vRight)).isEqualTo(0);
     }
 
     @Test
     public void magnitude_works() {
-        assertThat(magnitude(vA)).isEqualTo(1.0);
-        assertThat(magnitude(vB)).isEqualTo(1.0);
-        assertThat(magnitude(vZ)).isEqualTo(0.0);
+        assertThat(magnitude(vUp)).isEqualTo(1.0);
+        assertThat(magnitude(vRight)).isEqualTo(1.0);
+        assertThat(magnitude(vOrigin)).isEqualTo(0.0);
     }
 
     @Test
     public void angle_returnsAngleBetweenTwoVectors() {
-        assertThat(angle(vA, vB)).isEqualTo(2 * PI * 1.0 / 4.0, delta(0.001));
+        assertThat(angle(vUp, vRight)).isEqualTo(2 * PI * 1.0 / 4.0, delta(0.001));
+    }
+
+    @Test
+    public void isRightOf_returnsTrueIfPointIsRightOfVector() {
+        assertThat(isRightOf(up, vRight)).isTrue();
+        assertThat(isRightOf(right, vUp)).isFalse();
+    }
+
+    @Test
+    public void slope_works() {
+        assertThat(slope(vUpRight)).isEqualTo(1.0);
+        assertThat(slope(vUp)).isEqualTo(Double.MAX_VALUE);
+        assertThat(slope(vRight)).isEqualTo(0.0);
     }
 }
