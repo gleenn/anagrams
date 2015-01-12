@@ -2,16 +2,11 @@ package euler;
 
 import org.junit.Test;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import static java.lang.Math.max;
 import static org.fest.assertions.Assertions.assertThat;
 
 public class Problem11Test {
     @Test
     public void works() throws Exception {
-        List<List<Integer>> dataz = new ArrayList<>();
         String rawDataz =
                 "08 02 22 97 38 15 00 40 00 75 04 05 07 78 52 12 50 77 91 08\n" +
                 "49 49 99 40 17 81 18 57 60 87 17 40 98 43 69 48 04 56 62 00\n" +
@@ -34,34 +29,6 @@ public class Problem11Test {
                 "20 73 35 29 78 31 90 01 74 31 49 71 48 86 81 16 23 57 05 54\n" +
                 "01 70 54 71 83 51 54 69 16 92 33 48 61 43 52 01 89 19 67 48";
 
-        for (String line : rawDataz.split("\n")) {
-            List<Integer> row = new ArrayList<>();
-            for (String num : line.split(" ")) {
-                row.add(Integer.parseInt(num));
-            }
-            dataz.add(row);
-        }
-
-        int bestProduct = 0;
-        for(int j=0; j<dataz.size()-3; j++) {
-            for(int i=0; i<dataz.get(0).size()-3; i++) {
-                bestProduct = max(check(i, j, 4, dataz), bestProduct);
-            }
-        }
-        assertThat(bestProduct).isEqualTo(70600674);
-    }
-
-    int check(int x, int y, int length, List<List<Integer>> dataz) {
-        int productRight = 1;
-        int productDown = 1;
-        int productDownRight = 1;
-        int productDownLeft = 1;
-        for(int i=0; i<length; i++) {
-            productRight *= dataz.get(y).get(x+i);
-            productDown *= dataz.get(y+i).get(x);
-            productDownRight *= dataz.get(y+i).get(x+i);
-            productDownLeft *= dataz.get(y+i).get(x-i+3);
-        }
-        return max(max(max(productRight, productDown), productDownRight), productDownLeft);
+        assertThat(Problem11.findLargestProduct(rawDataz)).isEqualTo(70600674);
     }
 }
