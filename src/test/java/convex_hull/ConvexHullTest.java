@@ -6,6 +6,7 @@ import org.junit.Test;
 import java.util.List;
 
 import static convex_hull.ConvexHull.getHullEdges;
+import static convex_hull.ConvexHull.getHullEdgesFast;
 import static convex_hull.Point.point;
 import static convex_hull.Vector.vector;
 import static java.util.Arrays.asList;
@@ -29,12 +30,21 @@ public class ConvexHullTest {
     }
 
     @Test
-    public void getHull_works() {
-        List<Vector> hullEdges = getHullEdges(asList(right, up, left, down, center));
+    public void getHullEdges_works() {
         // note that this is implementation specific
         // and the edges are actually undirected so there
         // there are more possibilities that just the
         // specific vectors listed below
+        List<Vector> hullEdges = getHullEdges(asList(right, up, left, down, center));
+        assertThat(hullEdges).contains(vector(right, down));
+        assertThat(hullEdges).contains(vector(left, down));
+        assertThat(hullEdges).contains(vector(up, left));
+        assertThat(hullEdges).contains(vector(right, up));
+    }
+
+    @Test
+    public void getHullEdgesFast_works() {
+        List<Vector> hullEdges = getHullEdgesFast(asList(right, up, left, down, center));
         assertThat(hullEdges).contains(vector(right, down));
         assertThat(hullEdges).contains(vector(left, down));
         assertThat(hullEdges).contains(vector(up, left));

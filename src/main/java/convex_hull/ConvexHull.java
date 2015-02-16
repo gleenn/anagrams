@@ -1,12 +1,25 @@
 package convex_hull;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 import static convex_hull.Vector.isRightOf;
 import static convex_hull.Vector.vector;
 
 public class ConvexHull {
+    public static List<Vector> getHullEdgesFast(final List<Point> points) {
+        final List<Point> sortedPoints = new ArrayList<>(points);
+        sortedPoints.sort(new Comparator<Point>() {
+            @Override
+            public int compare(Point a, Point b) {
+                return a.x - b.x;
+            }
+        });
+
+        return null;
+    }
+
     public static List<Vector> getHullEdges(final List<Point> points) {
         final List<Vector> result = new ArrayList<>(points.size());
         Vector currentVector = null;

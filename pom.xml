@@ -8,6 +8,11 @@
     <version>1.0-SNAPSHOT</version>
     <dependencies>
         <dependency>
+        	<groupId>com.google.guava</groupId>
+        	<artifactId>guava</artifactId>
+        	<version>r05</version>
+        </dependency>
+        <dependency>
             <groupId>org.easytesting</groupId>
             <artifactId>fest-assert</artifactId>
             <version>1.4</version>
