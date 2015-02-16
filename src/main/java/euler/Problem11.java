@@ -19,6 +19,8 @@ public class Problem11 {
             dataz.add(row);
         }
 
+//        return dataz.stream();
+
         int bestProduct = 0;
         for (int j = 0; j < dataz.size() - 3; j++) {
             for (int i = 0; i < dataz.get(0).size() - 3; i++) {
