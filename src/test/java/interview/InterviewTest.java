@@ -25,5 +25,8 @@ public class InterviewTest {
     public void foo() {
         String[] parts = "aa".split("a");
         assertThat(parts.length == 0);
+
+        String[] parts2 = "aa".split("z");
+        assertThat(parts2.length).isEqualTo(1);
     }
 }
