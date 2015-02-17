@@ -1,6 +1,7 @@
 package convex_hull;
 
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import java.util.List;
@@ -42,7 +43,7 @@ public class ConvexHullTest {
         assertThat(hullEdges).contains(vector(right, up));
     }
 
-    @Test
+    @Test @Ignore
     public void getHullEdgesFast_works() {
         List<Vector> hullEdges = getHullEdgesFast(asList(right, up, left, down, center));
         assertThat(hullEdges).contains(vector(right, down));
