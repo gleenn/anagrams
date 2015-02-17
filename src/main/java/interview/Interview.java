@@ -1,30 +1,22 @@
 package interview;
 
-import java.util.LinkedList;
-
-import static java.util.Arrays.asList;
-
 public class Interview {
-    public static boolean matches(String needle, String hayStack) {
-        String[] parts = needle.split("\\?");
-        boolean endsWithQ = hayStack.endsWith("?");
-        if(parts.length == 0) return hayStack.equals("");
-        return matches(new LinkedList<>(asList(parts)), hayStack, endsWithQ);
+    public static boolean matches(final String needle, final String hayStack) {
+        if(needle == null || hayStack == null) throw new IllegalArgumentException("args can't be null");
+        return matches(needle, hayStack, 0, 0);
     }
 
-    private static boolean matches(final LinkedList<String> needlParts, final String hayStack, final boolean endsWithQ) {
-        if(needlParts.size() == 0) return false;
-        String needlePart = needlParts.pop();
-        int length = needlePart.length();
+    private static boolean matches(final String needle, final String hayStack, final int needlePos, final int hayStackPos) {
+        if(needlePos == needle.length() && hayStackPos == hayStack.length()) return true;
 
-        if(hayStack.startsWith(needlePart)) {
-            return needlParts.isEmpty() || matches(needlParts, hayStack.substring(0, length), endsWithQ);
-        }
-
-        String skipLast = needlePart.substring(0, Math.max(length - 2, 0));
-        if(hayStack.startsWith(skipLast)) {
-            return (needlParts.isEmpty() && endsWithQ) || matches(needlParts, skipLast, endsWithQ);
-        }
+        if(needlePos >= needle.length()) return false;
+        if(needle.charAt(needlePos) == '?') return matches(needle, hayStack, needlePos + 1, hayStackPos);
+        if(hayStackPos < hayStack.length() && needle.charAt(needlePos) == hayStack.charAt(hayStackPos) &&
+                matches(needle, hayStack, needlePos + 1, hayStackPos + 1))
+            return true;
+        if((needlePos + 1 < needle.length() && needle.charAt(needlePos + 1) == '?' &&
+                matches(needle, hayStack, needlePos + 2, hayStackPos)))
+            return true;
 
         return false;
     }
